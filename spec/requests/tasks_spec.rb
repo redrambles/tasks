@@ -50,6 +50,7 @@ RSpec.describe "/tasks", type: :request do
 
         expect(json_response).to be_a(Hash)
         expect(json_response).to have_key('task')
+        expect(json_response['task']).to have_key('title')
       end
     end
 
@@ -90,6 +91,7 @@ RSpec.describe "/tasks", type: :request do
         json_response = JSON.parse(response.body)
         expect(json_response).to be_a(Hash)
         expect(json_response).to have_key('task')
+        expect(json_response['task']).to have_key('title')
 
       end
     end
