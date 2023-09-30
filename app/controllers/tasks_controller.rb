@@ -25,17 +25,9 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     update_params = {title: params[:title], due_date: params[:due_date], status: params[:status]}
     if @task.update(update_params)
-      render json: @task
+      render json: {message: "Task updated successfully", task: {title: @task.title, due_date: @task.due_date, status: @task.status}}, status: 201
     else
       render json: {message: "Unable to update task", errors: @task.errors.full_messages}, status: 422
     end
   end
 end
-
-
-
-
-# def show
-#   @user = User.find(params[:id])
-#   render json: @user
-# end
