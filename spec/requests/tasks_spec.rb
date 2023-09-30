@@ -88,9 +88,8 @@ RSpec.describe "/tasks", type: :request do
         patch task_url(task), params: new_attributes 
         task.reload
         json_response = JSON.parse(response.body)
-        binding.pry
         expect(json_response).to be_a(Hash)
-        expect(json_response).to have_key('title')
+        expect(json_response).to have_key('task')
 
       end
     end
