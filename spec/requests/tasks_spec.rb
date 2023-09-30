@@ -13,8 +13,12 @@ require 'rails_helper'
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
 RSpec.describe "/tasks", type: :request do
-  let(:valid_attributes) {
+  let(:valid_attributes_status_true) {
     {title: "Do the laundry", due_date: 1.day.from_now, status: true}
+  }
+
+  let(:valid_attributes_status_false) {
+    {title: "Do the laundry", due_date: 1.day.from_now, status: false}
   }
 
   let(:invalid_attributes) {
@@ -22,35 +26,65 @@ RSpec.describe "/tasks", type: :request do
   }
 
   describe "GET /index" do
-    it "renders a successful response" do
-      Task.create! valid_attributes
+    it "renders a successful response with a status of true" do
+      Task.create! valid_attributes_status_true
+      get tasks_url
+      expect(response).to be_successful
+    end
+
+    it "renders a successful response with a status of false" do
+      Task.create! valid_attributes_status_false
       get tasks_url
       expect(response).to be_successful
     end
   end
 
   describe "POST /create" do
-    context "with valid parameters" do
+    context "with valid parameters and status of true" do
       it "creates a new Task" do
         expect {
-          post tasks_url, params: valid_attributes, as: :json
+          post tasks_url, params: valid_attributes_status_true, as: :json
 
         }.to change(Task, :count).by(1)
       end
 
       it "renders the appropriate http status with a created task" do
-        post tasks_url, params: valid_attributes, as: :json
+        post tasks_url, params: valid_attributes_status_true, as: :json
         expect(response).to have_http_status(201)
       end
 
       it "renders the appropriate JSON response with a created task" do
-        post tasks_url, params: valid_attributes, as: :json
+        post tasks_url, params: valid_attributes_status_true, as: :json
 
         json_response = JSON.parse(response.body)
 
         expect(json_response).to be_a(Hash)
         expect(json_response).to have_key('task')
         expect(json_response['task']).to have_key('title')
+      end
+
+      context "with valid parameters and status of false" do
+        it "creates a new Task" do
+          expect {
+            post tasks_url, params: valid_attributes_status_false, as: :json
+  
+          }.to change(Task, :count).by(1)
+        end
+  
+        it "renders the appropriate http status with a created task" do
+          post tasks_url, params: valid_attributes_status_false, as: :json
+          expect(response).to have_http_status(201)
+        end
+  
+        it "renders the appropriate JSON response with a created task" do
+          post tasks_url, params: valid_attributes_status_false, as: :json
+  
+          json_response = JSON.parse(response.body)
+  
+          expect(json_response).to be_a(Hash)
+          expect(json_response).to have_key('task')
+          expect(json_response['task']).to have_key('title')
+        end
       end
     end
 
@@ -76,7 +110,7 @@ RSpec.describe "/tasks", type: :request do
       }
 
       it "updates the requested task" do
-        task = Task.create! valid_attributes
+        task = Task.create! valid_attributes_status_true
         patch task_url(task), params: new_attributes 
         task.reload
 
@@ -85,7 +119,7 @@ RSpec.describe "/tasks", type: :request do
       end
 
       it "renders the appropriate JSON response" do
-        task = Task.create! valid_attributes
+        task = Task.create! valid_attributes_status_true
         patch task_url(task), params: new_attributes 
         task.reload
         json_response = JSON.parse(response.body)
@@ -98,7 +132,7 @@ RSpec.describe "/tasks", type: :request do
 
     context "with invalid parameters" do
       it "renders a response with 422 status (i.e. to display the 'edit' template)" do
-        task = Task.create! valid_attributes
+        task = Task.create! valid_attributes_status_true
         patch task_url(task), params: { task: invalid_attributes }
         expect(response).to have_http_status(:unprocessable_entity)
       end
