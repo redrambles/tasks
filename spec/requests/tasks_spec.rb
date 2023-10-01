@@ -27,15 +27,18 @@ RSpec.describe "/tasks", type: :request do
 
   describe "GET /index" do
     it "renders a successful response with a status of true" do
-      Task.create! valid_attributes_status_true
+      task = Task.create! valid_attributes_status_true
       get tasks_url
       expect(response).to be_successful
+      expect(response.body).to include(task.title)
+
     end
 
     it "renders a successful response with a status of false" do
-      Task.create! valid_attributes_status_false
+      task = Task.create! valid_attributes_status_false
       get tasks_url
       expect(response).to be_successful
+      expect(response.body).to include(task.title)
     end
   end
 
