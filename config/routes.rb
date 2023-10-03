@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   root "tasks#index"
 
   resources :tasks do
-    post "toggle_status_state", as:"toggle_status", on: :member
+    post "mark_task_as_done", as:"complete", on: :member
   end #, only: [:index, :create, :update]
 end

@@ -1,6 +1,6 @@
 <h1><%= @task.title %></h1>
 <% if @task.incomplete? %>
-  <%= button_to "Mark done", toggle_status_task_path(@task) %>
+  <%= button_to "Mark done", complete_task_path(@task) %>
 <% end %>
 <p><%= format_due_date(@task) %></p>
 

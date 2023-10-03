@@ -62,8 +62,7 @@ RSpec.describe "/tasks", type: :request do
         json_response = JSON.parse(response.body)
 
         expect(json_response).to be_a(Hash)
-        expect(json_response).to have_key('task')
-        expect(json_response['task']).to have_key('title')
+        expect(json_response).to have_key('title')
       end
 
       context "with valid parameters and status of false" do
@@ -85,8 +84,7 @@ RSpec.describe "/tasks", type: :request do
           json_response = JSON.parse(response.body)
   
           expect(json_response).to be_a(Hash)
-          expect(json_response).to have_key('task')
-          expect(json_response['task']).to have_key('title')
+          expect(json_response).to have_key('title')
         end
       end
     end
@@ -114,7 +112,7 @@ RSpec.describe "/tasks", type: :request do
 
       it "updates the requested task" do
         task = Task.create! valid_attributes_status_true
-        patch task_url(task), params: new_attributes 
+        patch task_url(task), params: {task: new_attributes }
         task.reload
 
         expect(task.title).to eq(new_attributes[:title])
@@ -123,13 +121,12 @@ RSpec.describe "/tasks", type: :request do
 
       it "renders the appropriate JSON response" do
         task = Task.create! valid_attributes_status_true
-        patch task_url(task), params: new_attributes 
+        patch task_url(task), params: { task: new_attributes }, as: :json
         task.reload
         json_response = JSON.parse(response.body)
         expect(json_response).to be_a(Hash)
-        expect(json_response).to have_key('task')
-        expect(json_response['task']).to have_key('title')
-
+        expect(json_response).to have_key('title')
+        expect(json_response['title']).to eq(new_attributes[:title])
       end
     end
 
