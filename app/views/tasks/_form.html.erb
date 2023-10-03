@@ -1,0 +1,27 @@
+
+
+<%= form_with(model: task) do |form| %>
+
+  <% if task.errors.any? %>
+    <div class="error-messages">
+      <ul>
+      <% task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <!-- Form fields for editing title, description, and status -->
+  <%= form.label :title %>
+  <%= form.text_field :title %>
+  
+  <!-- Add fields for editing description and status as needed -->
+  <%= form.label :due_date %>
+  <%= form.date_field :due_date %>
+
+  <%= form.label :status %>
+  <%= form.check_box :status %>
+  
+  <%= form.submit %>
+<% end %>

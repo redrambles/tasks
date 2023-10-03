@@ -1,0 +1,25 @@
+<header class="task-header">
+  <h1>Tasks</h1>
+  <%= link_to "New Task", new_task_path %>
+</header>
+
+<%= link_to 'Show Completed', tasks_path(status: 'completed'), class: "task-status" %>
+<%= link_to 'Show ToDo', tasks_path(status: 'incomplete'), class: "task-status" %>
+<%= link_to 'Show All Tasks', tasks_path, class: "task-status" %>
+
+<% if @tasks.any? %>
+
+  <ul>
+    <% @tasks.each do |task| %>
+    <div class="tasks <%= task.status ? 'completed' : 'incomplete' %>">
+      <h2><%= link_to task.title, task %></h2>
+      <p><%= format_due_date(task) %></p>
+    </div>
+    <% end%>
+  </ul>
+
+<% else %>
+
+  <p> No tasks yet. Create one!
+
+<% end%>
