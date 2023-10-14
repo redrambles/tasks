@@ -1,17 +1,20 @@
-<header class="task-header">
-  <h1>Tasks</h1>
-  <%= link_to "New Task", new_task_path %>
+<header class="task-header my-6 flex justify-between items-center">
+  <h1 class="mb-0" >Tasks</h1>
+  <%= link_to "New Task", new_task_path, class:"btn btn-neutral" %>
 </header>
 
-<%= link_to 'Show Completed', tasks_path(status: 'completed'), class: "task-status" %>
-<%= link_to 'Show ToDo', tasks_path(status: 'incomplete'), class: "task-status" %>
-<%= link_to 'Show All Tasks', tasks_path, class: "task-status" %>
+<div class="flex flex-col sm:flex-row sm:gap-4">
+  <%= link_to 'Show Completed', tasks_path(status: 'completed'), class: "task-status btn btn-neutral" %>
+  <%= link_to 'Show ToDo', tasks_path(status: 'incomplete'), class: "task-status btn btn-neutral" %>
+  <%= link_to 'Show All Tasks', tasks_path, class: "task-status btn btn-neutral" %>
+</div>
+
 
 <% if @tasks.any? %>
 
-  <ul>
+  <ul class="px-0">
     <% @tasks.each do |task| %>
-    <div class="tasks <%= task.status ? 'completed' : 'incomplete' %>">
+    <div class="tasks <%= task.status ? 'completed' : 'incomplete' %> py-1 px-4 mb-4">
       <h2><%= link_to task.title, task %></h2>
       <p><%= format_due_date(task) %></p>
     </div>
