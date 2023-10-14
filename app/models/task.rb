@@ -5,6 +5,7 @@ class Task < ApplicationRecord
 
   scope :completed, -> { where(status: true) }
   scope :incomplete, -> { where(status: false) }
+  default_scope { order(created_at: :desc) }
 
   def completed?
     status == true
