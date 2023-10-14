@@ -6,9 +6,6 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans]
-      },
-      backgroundColor: {
-        "success-green": "#8cff8c"
       }
     }
   },
