@@ -22,3 +22,7 @@
 .btn-neutral {
   @apply bg-slate-100 text-slate-800 hover:bg-slate-200 py-4;
 }
+
+.btn-danger {
+  @apply bg-[#f49e8f] text-slate-800 hover:bg-[#e79686] py-4;
+}

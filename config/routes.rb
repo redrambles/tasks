@@ -6,5 +6,5 @@ Rails.application.routes.draw do
 
   resources :tasks do
     post "mark_task_as_done", as:"complete", on: :member
-  end #, only: [:index, :create, :update]
+  end
 end

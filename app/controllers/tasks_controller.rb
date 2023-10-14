@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
 
-before_action :set_task, only: [:show, :edit, :update, :destroy]
+before_action :set_task, except: [:index, :new, :create]
 
 def index
   if params[:status] == 'completed'
