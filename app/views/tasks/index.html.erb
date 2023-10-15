@@ -16,6 +16,7 @@
 
 <% if @tasks.any? %>
 
+  <ul class="px-0 pb-10">
     <% @tasks.each do |task| %>
     <div class="tasks <%= task.completed? ? 'completed' : 'incomplete' %> py-1 px-4 mb-4">
     <div class="flex justify-between items-center my-6">

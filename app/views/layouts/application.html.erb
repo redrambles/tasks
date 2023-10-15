@@ -11,11 +11,16 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="prose mx-auto">
+  <body class="prose mx-auto flex flex-col">
 
     <div class="flash">
       <%= render "shared/flash" %>
     </div>
-    <%= yield %>
+    <main class="flex-1">
+      <%= yield %>
+    </main>
+    <div class="mx-auto my-4 text-sm text-center py-6">
+      Copyright <%= Date.current.year %> <%= link_to "Redrambles", "https://github.com/redrambles", class: "cursor-pointer decoration-1 underline-offset-4 hover:decoration-2" %>
+    </div>
   </body>
 </html>
