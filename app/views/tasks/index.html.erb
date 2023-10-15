@@ -3,21 +3,19 @@
   <div>
     <%= link_to "New Task", new_task_path, class:"btn btn-neutral" %>
     <% if @tasks.any? %>
-      <%= link_to "Export CSV", export_csv_tasks_path(format: :csv), class:"btn btn-neutral"%>
     <% end %>
   </div>
 </header>
 
 <div class="flex flex-col sm:flex-row mt-10 sm:mt-20 sm:gap-4">
-  <%= link_to 'Show Completed', tasks_path(status: 'completed'), class: "task-status btn btn-neutral" %>
-  <%= link_to 'Show ToDo', tasks_path(status: 'incomplete'), class: "task-status btn btn-neutral" %>
-  <%= link_to 'Show All Tasks', tasks_path, class: "task-status btn btn-neutral" %>
+  <%= link_to 'Show Completed', tasks_path(status: 'completed'), class: "task-status btn btn-neutral #{ params[:status]&.include?('completed') && 'is-active' }" %>
+  <%= link_to 'Show ToDo', tasks_path(status: 'incomplete'), class: "task-status btn btn-neutral #{ params[:status]&.include?('incomplete') && 'is-active' }" %>
+  <%= link_to 'Show All Tasks', tasks_path, class: "task-status btn btn-neutral #{ params[:status].blank? && 'is-active' }" %>
 </div>
 
 
 <% if @tasks.any? %>
 
-  <ul class="px-0">
     <% @tasks.each do |task| %>
     <div class="tasks <%= task.completed? ? 'completed' : 'incomplete' %> py-1 px-4 mb-4">
     <div class="flex justify-between items-center my-6">

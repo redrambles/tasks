@@ -6,11 +6,6 @@
   background-color: rgb(244, 158, 143);
 }
 
-.flash-message {
-  border: 2px solid rgb(140, 255, 140);
-  padding: 1rem;
-}
-
-.flash-message.error {
-  border-color: rgb(244, 158, 143);
+.is-active {
+  border: 1px solid rgb(152, 150, 150);
 }
