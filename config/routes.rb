@@ -6,5 +6,6 @@ Rails.application.routes.draw do
 
   resources :tasks do
     post "mark_task_as_done", as:"complete", on: :member
+    get "export_csv", on: :collection
   end
 end

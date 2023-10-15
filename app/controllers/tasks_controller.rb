@@ -1,15 +1,10 @@
 class TasksController < ApplicationController
+require "csv"
 
-before_action :set_task, except: [:index, :new, :create]
+before_action :set_task, except: [:index, :new, :create, :export_csv]
 
 def index
-  if params[:status] == 'completed'
-    @tasks = Task.completed
-  elsif params[:status] == 'incomplete'
-    @tasks = Task.incomplete
-  else
-    @tasks = Task.all # With a lot of tasks in a production app, we would use pagination here
-  end
+  fetch_possibly_filtered_tasks
 end
 
 def show
@@ -59,12 +54,53 @@ def destroy
 end
 
 def mark_task_as_done
-  @task = Task.find(params[:id])
   @task.update(status: true)
   redirect_to @task
 end
 
+def export_csv
+  fetch_possibly_filtered_tasks
+
+  if @tasks.present?
+    respond_to do |format|
+      format.csv do
+        send_data generate_csv(@tasks), filename: "tasks.csv"
+      end
+    end
+  else
+    redirect_to tasks_url, notice: "No tasks to export"
+  end
+end
+
 private
+
+def generate_csv(tasks)
+  CSV.generate(headers: true) do |csv|
+    csv << ["Title", "Date Created", "Status"]
+
+    @tasks.each do |task|
+      csv << [
+        task.title,
+        formatted_date(task.created_at),
+        task.status ? 'completed' : 'incomplete',
+      ]
+    end
+  end
+end
+
+  def fetch_possibly_filtered_tasks
+    if params[:status] == 'completed'
+      @tasks = Task.completed
+    elsif params[:status] == 'incomplete'
+      @tasks = Task.incomplete
+    else
+      @tasks = Task.all # With a lot of tasks in a production app, we would use pagination here
+    end
+  end
+
+  def formatted_date(time)
+    time.strftime("%Y-%m-%d")
+  end
 
   def set_task
     @task = Task.find(params[:id])
