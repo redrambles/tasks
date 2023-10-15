@@ -1,0 +1,29 @@
+.flash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.flash .flash-message {
+  animation: appear-then-fade 3s both;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 10px;
+  border: 2px solid rgb(140, 255, 140);
+}
+
+.flash .flash-message.error {
+  border-color: rgb(244, 158, 143);
+}
+
+@keyframes appear-then-fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  5%,
+  60% {
+    opacity: 1;
+  }
+}

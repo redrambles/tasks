@@ -12,7 +12,10 @@
   </head>
 
   <body class="prose mx-auto">
-    <%= render "layouts/flash" %>
+
+    <div class="flash">
+      <%= render "shared/flash" %>
+    </div>
     <%= yield %>
   </body>
 </html>

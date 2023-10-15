@@ -8,13 +8,11 @@ class TasksController < ApplicationController
   end
 
   def show
-
   end
 
   def new
     @task = Task.new
   end
-
 
   def create
     @task = Task.create(task_params)
@@ -24,25 +22,26 @@ class TasksController < ApplicationController
         format.json { render json: @task.as_json(only: [:title, :due_date, :status]), status: :created }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity }
+        format.json { render json: {errors: @task.errors.full_messages}, status: :unprocessable_entity }
       end
     end
   end
 
   def edit
-
   end
 
   def update
     if @task.update(task_params)
       respond_to do |format|
-        format.html { redirect_to @task, notice: "Task successfully updated!" }
+        format.html do
+          redirect_to @task, notice: "Task successfully updated!"
+        end
         format.json { render json: @task.as_json(only: [:title, :due_date, :status]), status: :ok }
       end
     else
       respond_to do |format|
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity }
+        format.json { render json: {errors: @task.errors.full_messages}, status: :unprocessable_entity }
       end
     end
   end
@@ -81,32 +80,31 @@ class TasksController < ApplicationController
         csv << [
           task.title,
           formatted_date(task.created_at),
-          task.status ? 'completed' : 'incomplete',
+          task.status ? "completed" : "incomplete"
         ]
       end
     end
   end
 
-    def fetch_possibly_filtered_tasks
-      if params[:status] == 'completed'
-        @tasks = Task.completed
-      elsif params[:status] == 'incomplete'
-        @tasks = Task.incomplete
-      else
-        @tasks = Task.all # With a lot of tasks in a production app, we would use pagination here
-      end
+  def fetch_possibly_filtered_tasks
+    @tasks = if params[:status] == "completed"
+      Task.completed
+    elsif params[:status] == "incomplete"
+      Task.incomplete
+    else
+      Task.all # With a lot of tasks in a production app, we would use pagination here
     end
+  end
 
-    def formatted_date(time)
-      time.strftime("%Y-%m-%d")
-    end
+  def formatted_date(time)
+    time.strftime("%Y-%m-%d")
+  end
 
-    def set_task
-      @task = Task.find(params[:id])
-    end
+  def set_task
+    @task = Task.find(params[:id])
+  end
 
-    def task_params
-      params.require(:task).permit(:title, :due_date, :status, :description)
-    end
-
+  def task_params
+    params.require(:task).permit(:title, :due_date, :status, :description)
+  end
 end
