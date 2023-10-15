@@ -19,12 +19,15 @@
 
   <ul class="px-0">
     <% @tasks.each do |task| %>
-    <div class="tasks <%= task.status ? 'completed' : 'incomplete' %> py-1 px-4 mb-4">
+    <div class="tasks <%= task.completed? ? 'completed' : 'incomplete' %> py-1 px-4 mb-4">
     <div class="flex justify-between items-center my-6">
-      <h2 class="my-0"><%= link_to task.title, task %></h2>
+      <h2 class="my-0"><%= link_to task.title, task, class: "cursor-pointer decoration-1 underline-offset-4 hover:decoration-2" %></h2>
       <%= button_to heroicon('trash'), task_path(task), method: :delete, data: { turbo_confirm: "Are you sure?" } %>
     </div>
-      <p><%= format_due_date(task) %></p>
+      <p class="text-sm"><%= format_due_date(task) %></p>
+      <% if task.has_description? %>
+        <p class="text-right"><%= task.description %></p>
+      <% end %>
     </div>
     <% end%>
   </ul>

@@ -2,6 +2,7 @@ class Task < ApplicationRecord
   validates :title, :due_date, presence: true
   validates_inclusion_of :status, in: [true, false]
   validates :title, length: {minimum: 3}
+  validates :description, length: {maximum: 250}
 
   scope :completed, -> { where(status: true) }
   scope :incomplete, -> { where(status: false) }
@@ -13,6 +14,10 @@ class Task < ApplicationRecord
 
   def incomplete?
     status == false
+  end
+
+  def has_description?
+    description.present?
   end
 
 end

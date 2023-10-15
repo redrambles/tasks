@@ -107,7 +107,7 @@ end
   end
 
   def task_params
-    params.require(:task).permit(:title, :due_date, :status)
+    params.require(:task).permit(:title, :due_date, :status, :description)
   end
 
 end
