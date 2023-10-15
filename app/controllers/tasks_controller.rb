@@ -86,17 +86,6 @@ class TasksController < ApplicationController
     else
       redirect_to export_csv_form_tasks_url, notice: "No tasks found in selected date range"
     end
-    # fetch_possibly_filtered_tasks
-
-    # if @tasks.present?
-    #   respond_to do |format|
-    #     format.csv do
-    #       send_data generate_csv(@tasks), filename: "tasks.csv"
-    #     end
-    #   end
-    # else
-    #   redirect_to tasks_url, notice: "No tasks to export"
-    # end
   end
 
   private
