@@ -1,10 +1,17 @@
 <h1 class="my-4 py-2"><%= @task.title %></h1>
-<% if @task.incomplete? %>
-  <%= button_to "Mark done", complete_task_path(@task) %>
-<% end %>
+<p><%= @task.description %></p>
 <p><%= format_due_date(@task) %></p>
 
-<div class="flex flex-col sm:flex-row sm:gap-4">
+<% if @task.incomplete? %>
+  <div class="flex gap-2">
+    <%= button_to complete_task_path(@task), class:"cursor-pointer flex gap-2 items-center btn btn-success" do %>
+      Mark done <%= heroicon('check-circle') %>
+    <% end %> 
+  </div>
+<% end %>
+
+
+<div class="flex flex-col sm:flex-row sm:gap-4 mt-10">
   <%= link_to "Back to all tasks", tasks_url, class: "task-status btn btn-neutral" %>
   <%= link_to "Edit task", edit_task_path(@task), class: "task-status btn btn-neutral" %>
   <%= button_to "Delete Task", task_path(@task), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "task-status btn btn-danger" %>

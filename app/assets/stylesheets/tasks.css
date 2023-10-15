@@ -5,3 +5,12 @@
 .incomplete {
   background-color: rgb(244, 158, 143);
 }
+
+.flash {
+  border: 2px solid rgb(140, 255, 140);
+  padding: 1rem;
+}
+
+.flash.error {
+  border-color: rgb(244, 158, 143);
+}

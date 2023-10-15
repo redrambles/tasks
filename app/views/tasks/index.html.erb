@@ -8,7 +8,7 @@
   </div>
 </header>
 
-<div class="flex flex-col sm:flex-row sm:gap-4">
+<div class="flex flex-col sm:flex-row mt-10 sm:mt-20 sm:gap-4">
   <%= link_to 'Show Completed', tasks_path(status: 'completed'), class: "task-status btn btn-neutral" %>
   <%= link_to 'Show ToDo', tasks_path(status: 'incomplete'), class: "task-status btn btn-neutral" %>
   <%= link_to 'Show All Tasks', tasks_path, class: "task-status btn btn-neutral" %>

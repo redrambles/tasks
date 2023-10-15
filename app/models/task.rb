@@ -19,5 +19,4 @@ class Task < ApplicationRecord
   def has_description?
     description.present?
   end
-
 end
