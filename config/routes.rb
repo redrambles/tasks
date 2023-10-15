@@ -5,7 +5,10 @@ Rails.application.routes.draw do
   root "tasks#index"
 
   resources :tasks do
-    post "mark_task_as_done", as:"complete", on: :member
-    get "export_csv", on: :collection
+    post "mark_task_as_done", as: "complete", on: :member
+    collection do
+      get "export_csv"
+      get "export_csv_form"
+    end
   end
 end

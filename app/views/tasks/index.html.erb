@@ -3,6 +3,7 @@
   <div>
     <%= link_to "New Task", new_task_path, class:"btn btn-neutral" %>
     <% if @tasks.any? %>
+      <%= link_to "Export CSV", export_csv_form_tasks_path, class:"btn btn-neutral"%>
     <% end %>
   </div>
 </header>

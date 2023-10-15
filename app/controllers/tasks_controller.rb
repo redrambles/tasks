@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   require "csv"
 
-  before_action :set_task, except: [:index, :new, :create, :export_csv]
+  before_action :set_task, except: [:index, :new, :create, :export_csv, :export_csv_form]
 
   def index
     fetch_possibly_filtered_tasks
@@ -56,18 +56,47 @@ class TasksController < ApplicationController
     redirect_to @task, notice: "Get it, girl!"
   end
 
-  def export_csv
-    fetch_possibly_filtered_tasks
+  def export_csv_form
+    render :export_csv_form
+  end
 
-    if @tasks.present?
+  def export_csv
+    start_date = params[:start_date]
+    end_date = params[:end_date]
+
+    if start_date.present? && end_date.present?
+      start_date = Date.parse(start_date)
+      end_date = Date.parse(end_date)
+    else
+      redirect_to export_csv_form_tasks_url, notice: "Please enter a start and end date"
+      return
+    end
+
+    @tasks = Task.where("due_date >= ? AND due_date <= ?", start_date, end_date)
+
+    # require "pry-remote"
+    # binding.remote_pry
+
+    if @tasks.any?
       respond_to do |format|
         format.csv do
           send_data generate_csv(@tasks), filename: "tasks.csv"
         end
       end
     else
-      redirect_to tasks_url, notice: "No tasks to export"
+      redirect_to export_csv_form_tasks_url, notice: "No tasks found in selected date range"
     end
+    # fetch_possibly_filtered_tasks
+
+    # if @tasks.present?
+    #   respond_to do |format|
+    #     format.csv do
+    #       send_data generate_csv(@tasks), filename: "tasks.csv"
+    #     end
+    #   end
+    # else
+    #   redirect_to tasks_url, notice: "No tasks to export"
+    # end
   end
 
   private

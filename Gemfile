@@ -19,7 +19,7 @@ gem "puma", "~> 5.0"
 gem "importmap-rails"
 
 # Add Heroicons
-gem 'rails_heroicons', '~> 0.6.0'
+gem "rails_heroicons", "~> 0.6.0"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
@@ -40,7 +40,7 @@ gem "redis", "~> 4.0"
 # gem "bcrypt", "~> 3.1.7"
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
@@ -53,7 +53,7 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "debug", platforms: %i[mri mingw x64_mingw]
   gem "rspec-rails"
   gem "pry"
 end
@@ -74,7 +74,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-
 end
 
 gem "tailwindcss-rails", "~> 2.0"
