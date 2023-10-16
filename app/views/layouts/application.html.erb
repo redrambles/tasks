@@ -21,6 +21,7 @@
       <%= yield %>
     </main>
     <div class="mx-auto my-4 text-sm text-center py-6">
+    <p><%= debug(params) if Rails.env.development?%></p>
       Copyright <%= Date.current.year %> <%= link_to "Redrambles", "https://github.com/redrambles", class: "cursor-pointer decoration-1 underline-offset-4 hover:decoration-2" %>
     </div>
   </body>
