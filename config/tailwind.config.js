@@ -6,6 +6,13 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans]
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: "75ch" // 65ch was a bit too narrow
+          }
+        }
       }
     }
   },
